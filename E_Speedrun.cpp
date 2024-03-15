@@ -87,8 +87,6 @@ void solve()
      
     vector <ll> tp = topologicalSort(graph,n,mp1);
 
-    // rep(i,n){cout<<tp[i]<<" ";}
-    // cout<<endl;
 
     vector <pair<ll,ll>> dp(n, {0,0});
     for(ll it = 0; it<n; it++){
@@ -96,52 +94,26 @@ void solve()
         ll x = dfs(graph, it, dp, h, k);
     }
 
-    // for(auto crr: tp){
-    //     dp[crr].first = h[crr];
-    //     for(auto it: graph[crr]){
-    //         if (h[it]>=h[crr])
-    //         dp[crr].second = max(dp[crr].second, h[it]-h[crr]);
-    //         else
-    //         dp[crr].second = max(dp[crr].second, k - h[crr] + h[it]);
-    //     }
-    // }
-
-    // rep(i,n) cout<<dp[i].first<<" "<<dp[i].second<<endl;
-
-    // for(auto it: mp1){
-        // cout<<dp[it.first].second<<endl;
-    // }
 
     vector<vector<ll>> check;
     ll mxend = 0;
     rep(i,n){
-        // what should I do now
-        // ll ct = (dp[i].first+dp[i].second+k-1)/k;
 
         mxend = max(mxend, dp[i].first+dp[i].second);
         if (mp1.find(i)!=mp1.end()){
-            // cout<<i<<endl;
             check.push_back({dp[i].first, dp[i].first + dp[i].second});
         }
-        // cout<<i<<(mp1.find(i)==mp1.end())<<endl;
     }
     
     
     
     sort(check.begin(), check.end());
 
-    // rep(i,n){
-    //     cout<<check[i][0]<<" "<<check[i][1]<<" ";
-    // }
-    // cout<<endl;
-    // cout<<mxend<<endl;
 
     ll ans = 1e18;
     rep(i,check.size()){
-        // cout<<check[i][0]<<" "<<check[i][1]<<endl;
         ans = min(ans,mxend - check[i][0]);
         mxend = max(mxend,check[i][1]+k);
-        // cout<<ans<<" "<<mxend<<endl;
     }
 
     cout<<ans<<endl;

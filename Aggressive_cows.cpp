@@ -1,51 +1,71 @@
-// Online C++ compiler to run C++ program online
-#include <iostream>
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#include <ext/pb_ds/tree_policy.hpp>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+
+    //Whatever
+    //IMSS I am sad scam 
+
+#define pi (3.141592653589)
+#define M 1000000007
+#define ll long long int
+#define pb push_back
+#define mp make_pair
+#define all(x) x.begin(), x.end()
+#define f first
+#define s second
+#define rrep(i, n) for(int i=n-1;i>=0;i--)
+#define rep(i,n) for(int i=0;i<n;i++)
+#define ioset ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
+#define ps(x,y) fixed<<setprecision(y)<<x
+#define pii pair<int,int>
+#define vi vector<int>
+#define vl vector<ll>
+#define vvl vector<vl>
+
 using namespace std;
-bool isPossible(long long minDis,set<long long>&pos ,long long k){
-    long long cnt=1;
-    auto it=pos.begin();
-    long long prev_pos=*it;
-    it++;
-    for(it;it!=pos.end();it++){
-        long long c_pos=*it;
-        if((c_pos-prev_pos)>=minDis){
-            prev_pos=c_pos;
+using namespace __gnu_pbds;
+
+#define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
+
+int check(ll mid, vector<ll> &v, ll m){
+    ll cnt = 1, prv = v[0];
+    for(int i=1; i<v.size(); i++){
+        if((v[i] - prv) >= mid){
             cnt++;
+            prv = v[i];
         }
     }
-    if(cnt>=k)return true;
-    return false;
+    if(cnt>=m) return 1;
+    return 0;
 }
-void solve(){
-    
-    long long n,c;cin>>n>>c;
-    set<long long>set1;
-    for(long long i=0;i<n;i++){
-        long long val;cin>>val;
-        set1.insert(val);
-    }
-    long long lo=0,hi=1e18;
-    long long ans=lo;
-    //binary search on distance
-    while(lo < hi - 1){
-        long long midDis=lo+(hi-lo)/2;
-        if(isPossible(midDis,set1,c)){
-            ans=midDis;
-            lo=midDis;
-        }else{
-            hi=midDis;
+
+void solve()
+{
+    ll n,m; cin>>n>>m;
+    vector<ll> v(n); 
+    for(int i=0; i<n; i++) cin>>v[i];
+    sort(v.begin(), v.end());
+    ll lo = 0, hi = 1e18;
+    while(lo+1<hi){
+        ll mid = lo + ((hi-lo)/2);
+        if(check(mid, v, m)){
+            lo = mid;
         }
+        else hi = mid;
     }
-    cout<<lo;
+    cout<<lo<<endl;
 }
-int main() {
-    // Write C++ code here
-   
-    long long t;cin>>t;
-    while(t-->0){
+
+
+int32_t main()
+{
+    ioset
+    int t;
+    cin>>t;
+    while(t--)
+    {
         solve();
     }
-
     return 0;
 }
